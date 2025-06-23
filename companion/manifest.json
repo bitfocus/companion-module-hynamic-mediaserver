@@ -1,0 +1,26 @@
+{
+	"id": "Hynamic-mediaserver",
+	"name": "Hynamic-mediaserver",
+	"shortname": "Hynamic-mediaserver",
+	"description": "Companion module for the Hynamic Media-Server Products",
+	"version": "1.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-hynamic-mediaserver",
+	"bugs": "git+https://github.com/bitfocus/companion-module-hynamic-mediaserver/issues",
+	"maintainers": [
+		{
+			"name": "Hynamic-mediaserver",
+			"email": ""
+		}
+	],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../src/main.js"
+	},
+	"legacyIds": [],
+	"manufacturer": "Hynamic",
+	"products": ["MD3 Pro"],
+	"keywords": ["Hynamic", "Media-Server", "MD3 Pro"]
+}
