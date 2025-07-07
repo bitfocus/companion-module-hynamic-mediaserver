@@ -38,6 +38,11 @@ const getActions = function (instance) {
 					data: programId,
 				})
 				await instance.udp.send(play_program_cmd)
+
+				// Update variables and feedbacks after program change
+				const variables = require('./variables')
+				variables.updateVariables(instance)
+				instance.checkFeedbacks()
 			} catch (error) {
 				instance.log('error', 'program cmd send error')
 			}
@@ -383,7 +388,7 @@ const getActions = function (instance) {
 		},
 	}
 
-  actions['brightness_up'] = {
+	actions['brightness_up'] = {
 		name: 'brightness_up',
 		options: [],
 		callback: async (event) => {
@@ -391,7 +396,7 @@ const getActions = function (instance) {
 				const cmd = codec.encodeControlProtocol({
 					tag: 391,
 					dataLen: 2,
-          dataType: 'hex',
+					dataType: 'hex',
 					data: [0x01, BRIGHTNESS_STEP], // 亮度增加：步进5
 				})
 				instance.log('info', `brightness_up cmd send: ${cmd}`)
@@ -411,7 +416,7 @@ const getActions = function (instance) {
 				const cmd = codec.encodeControlProtocol({
 					tag: 391,
 					dataLen: 2,
-          dataType: 'hex',
+					dataType: 'hex',
 					data: [0x00, BRIGHTNESS_STEP], // 亮度减少：步进5
 				})
 				instance.log('info', `brightness_down cmd send: ${cmd}`)
@@ -440,7 +445,7 @@ const getActions = function (instance) {
 		},
 	}
 
-  actions['pause'] = {
+	actions['pause'] = {
 		name: 'pause',
 		options: [],
 		callback: async (event) => {

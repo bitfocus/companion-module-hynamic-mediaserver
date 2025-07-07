@@ -1,4 +1,3 @@
-
 const PRODUCTS_INFO = {
 	md3pro: { id: 'md3pro', label: 'Hynamic MD3 Pro' },
 }
