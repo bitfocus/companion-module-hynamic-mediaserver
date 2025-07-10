@@ -1,12 +1,12 @@
 const { InstanceBase, Regex, UDPHelper, runEntrypoint, InstanceStatus } = require('@companion-module/base')
 
-const actions = require('./actions')
-const UpgradeScripts = require('./upgrades')
-const presets = require('./presets')
+const actions = require('./actions.js')
+const UpgradeScripts = require('./upgrades.js')
+const presets = require('./presets.js')
 
-const { getPrograms } = require('../utils/getPrograms')
-const { decodePrograms, decodeControlProtocol } = require('../utils/cmdCodec')
-const { PRODUCTS_INFO, PRODUCTS_INFORMATION, ADD_ACTIONS_DEVICES } = require('../utils/constant')
+const { getPrograms } = require('../utils/getPrograms.js')
+const { decodePrograms, decodeControlProtocol } = require('../utils/cmdCodec.js')
+const { PRODUCTS_INFO, PRODUCTS_INFORMATION, ADD_ACTIONS_DEVICES } = require('../utils/constant.js')
 
 class ModuleInstance extends InstanceBase {
 	constructor(internal) {
