@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "main": "./src/main.js",
   "scripts": {
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "check": "companion-module-check",
+    "build": "companion-module-build"
   },
   "license": "MIT",
   "repository": {
@@ -17,7 +19,9 @@
     "ping": "^0.4.4"
   },
   "devDependencies": {
-    "@companion-module/tools": "^1.4.1"
+    "@companion-module/tools": "^1.4.1",
+    "prettier": "^3.6.2"
   },
-  "prettier": "@companion-module/tools/.prettierrc.json"
+  "prettier": "@companion-module/tools/.prettierrc.json",
+  "packageManager": "yarn@4.9.2"
 }
