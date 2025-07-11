@@ -1,5 +1,5 @@
 const codec = require('../utils/cmdCodec.js')
-const { getPrograms } = require('../utils/getPrograms')
+const { getPrograms } = require('../utils/getPrograms.js')
 
 const VOLUME_STEP = 5
 const BRIGHTNESS_STEP = 2
@@ -38,11 +38,6 @@ const getActions = function (instance) {
 					data: programId,
 				})
 				await instance.udp.send(play_program_cmd)
-
-				// Update variables and feedbacks after program change
-				const variables = require('./variables')
-				variables.updateVariables(instance)
-				instance.checkFeedbacks()
 			} catch (error) {
 				instance.log('error', 'program cmd send error')
 			}
