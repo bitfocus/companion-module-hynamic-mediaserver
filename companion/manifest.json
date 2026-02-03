@@ -3,7 +3,7 @@
 	"name": "Hynamic-mediaserver",
 	"shortname": "Hynamic-mediaserver",
 	"description": "Companion module for the Hynamic Media-Server Products",
-	"version": "1.0.0",
+	"version": "1.4.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-hynamic-mediaserver",
 	"bugs": "git+https://github.com/bitfocus/companion-module-hynamic-mediaserver/issues",

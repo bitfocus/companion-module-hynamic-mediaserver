@@ -14,7 +14,6 @@ class ModuleInstance extends InstanceBase {
 
 		Object.assign(this, {
 			...actions,
-			...feedbacks,
 		})
 
 		this.PRODUCTS_INFO = PRODUCTS_INFO
@@ -24,31 +23,27 @@ class ModuleInstance extends InstanceBase {
 
 	updateActions() {
 		this.setActionDefinitions(
-			ADD_ACTIONS_DEVICES.includes(this.config.modelId) ? actions.getAllActions(this) : actions.getActions(this),
+			ADD_ACTIONS_DEVICES.includes(this.config.modelId) ? actions.getAllActions(this) : actions.getActions(this)
 		)
-	}
-
-	updateFeedbacks() {
-		this.setFeedbackDefinitions(feedbacks.getFeedbacks(this))
 	}
 
 	updatePresets() {
 		this.setPresetDefinitions(
 			ADD_ACTIONS_DEVICES.includes(this.config.modelId)
 				? presets.getAllPresetDefinitions()
-				: presets.getPresetDefinitions(),
+				: presets.getPresetDefinitions()
 		)
 	}
 
 	initUDP() {
-		if (this.udp) {
+		if(this.udp) {
 			this.udp.destroy()
 			delete this.udp
 		}
 
-		if (this.config.host) {
+		if(this.config.host) {
 			this.udp = new UDPHelper(this.config.host, this.config.port ?? 18960, {
-				bind_ip: this.config.host,
+				bind_ip: '0.0.0.0',
 				bind_port: 18961,
 			})
 
@@ -69,27 +64,21 @@ class ModuleInstance extends InstanceBase {
 
 				const res = decodeControlProtocol(msg)
 
-				if (res.tag !== 129) {
-					this.log('debug', `Response tag: ${res.tag}`)
+				if(res.tag !== 129) {
+					console.log(`响应tag: ${res.tag}`)
+					this.log('debug', `响应tag: ${res.tag}`)
 					return
 				}
 
 				const result = decodePrograms(res.data)
 
-				this.log('debug', `Programs result: ${JSON.stringify(result)}`)
-
-				// Update variables when we receive data
-				variables.updateVariables(this)
-				this.checkFeedbacks()
+				console.log('~~~~~~~~~~~~~res', JSON.stringify(result))
 				// this.status(this.STATE_WARNING, 'Connecting...')
 			})
 
 			this.udp.on('status_change', (status, message) => {
 				this.updateStatus(status, message)
 				this.log('debug', 'UDP status_change: ' + status)
-				// Update variables when connection status changes
-				variables.updateVariables(this)
-				this.checkFeedbacks()
 			})
 			this.log('debug', 'initUDP finish')
 		} else {
@@ -101,7 +90,7 @@ class ModuleInstance extends InstanceBase {
 	async init(config) {
 		this.config = config
 
-		if (this.config.modelID !== undefined) {
+		if(this.config.modelID !== undefined) {
 			this.model = this.PRODUCTS_INFO[this.config.modelID]
 		} else {
 			this.config.modelID = this.PRODUCTS[0]
@@ -112,24 +101,20 @@ class ModuleInstance extends InstanceBase {
 		this.programList = []
 		this.programId = 0
 
-		// Initialize variables
-		variables.initVariables(this)
-
 		this.updateStatus(InstanceStatus.Connecting)
 
 		this.initUDP()
 
 		this.updateActions()
-		this.updateFeedbacks()
 		this.updatePresets()
 	}
 
 	// When module gets deleted
 	async destroy() {
-		if (this.socket !== undefined) {
+		if(this.socket !== undefined) {
 			this.socket.destroy()
 		}
-		if (this.udp !== undefined) {
+		if(this.udp !== undefined) {
 			this.udp.destroy()
 		}
 		this.log('debug', 'destroy')
@@ -175,7 +160,7 @@ class ModuleInstance extends InstanceBase {
 	async configUpdated(config) {
 		let resetConnection = false
 
-		if (this.config.host != config.host) {
+		if(this.config.host != config.host) {
 			resetConnection = true
 		}
 
@@ -186,14 +171,9 @@ class ModuleInstance extends InstanceBase {
 			...config,
 		}
 		this.model = this.PRODUCTS[config.modelID]
-
-		// Update variables with new config
-		variables.updateVariables(this)
-
 		this.updatePresets()
 		this.updateActions()
-		this.updateFeedbacks()
-		if (resetConnection === true || this.socket === undefined) {
+		if(resetConnection === true || this.socket === undefined) {
 			this.updateStatus(InstanceStatus.Connecting)
 			this.initUDP()
 		}
